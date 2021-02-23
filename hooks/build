@@ -1,0 +1,8 @@
+#!/bin/bash
+
+docker build --build-arg ARGOCD_VERSION=${ARGOCD_VERSION}\
+ --build-arg HELM_VERSION=${HELM_VERSION}\
+ --build-arg HELM_SECRETS_VERSION=${HELM_SECRETS_VERSION}\
+ --build-arg SOPS_VERSION=${SOPS_VERSION}\
+ --build-arg SKAFFOLD_VERSION=${SKAFFOLD_VERSION}\
+ -t $IMAGE_NAME .
