@@ -13,7 +13,7 @@ then
     # will cause a parsing error from argocd, so we need to remove them.
     # We cannot use exec here as we need to pipe the output so we call helm in a subprocess and
     # handle the return code ourselves.
-    out=$(helm.bin secrets $cmd)
+    out=$(helm.bin secrets $cmd 2>/dev/null)
     code=$?
     if [ $code -eq 0 ]; then
         # printf insted of echo here because we really don't want any backslash character processing
