@@ -1,9 +1,11 @@
 #! /bin/sh
 
-# swap kube-context option to the end
+# Move --kube-context option at the end for easier parsing
 cmd=$(echo "$@" | sed 's/\(--kube-context [a-zA-Z0-9\-]* \)\(.*\)/\2 \1/g')
+arg=$(echo "${cmd}" | cut -d " " -f1)
+
 # helm secrets only supports a few helm commands
-if [ $1 = "template" ] || [ $1 = "install" ] || [ $1 = "upgrade" ] || [ $1 = "lint" ] || [ $1 = "diff" ]
+if [ ${arg} = "template" ] || [ ${arg} = "install" ] || [ ${arg} = "upgrade" ] || [ ${arg} = "lint" ] || [ ${arg} = "diff" ]
 then 
     # Helm secrets add some useless outputs to every commands including template, namely
     # 'remove: <secret-path>.dec' for every decoded secrets.
