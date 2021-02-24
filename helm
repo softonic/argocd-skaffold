@@ -17,7 +17,7 @@ then
     code=$? 
     if [ $code -eq 0 ]; then
         # printf insted of echo here because we really don't want any backslash character processing
-        printf '%s\n' "$out" | sed -E "/^removed '.+\.dec'$/d"      
+        printf '%s\n' "$out" | sed -E "/^removed '.+\.dec'$/d" | grep -v ".yaml.dec"
         exit 0
     else
         exit $code
