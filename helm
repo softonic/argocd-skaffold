@@ -1,5 +1,10 @@
 #! /bin/sh
 
+if [ -z $@ ]; then
+    exec helm.bin
+    exit $?
+fi
+
 all_cmds=$(helm.bin | grep -A50 "Available Commands" | grep -B50 "Flags:" | tail -n+2 | head -n-2 | awk '{ print $1 }')
 # Move --kube-context option at the end for easier parsing
 cmd=$(echo "$@" | sed 's/\(--kube-context [a-zA-Z0-9\-]* \)\(.*\)/\2 \1/g')
