@@ -1,5 +1,4 @@
 #! /bin/sh
-
 all_cmds=$(helm.bin | grep -A50 "Available Commands" | grep -B50 "Flags:" | tail -n+2 | head -n-2 | awk '{ print $1 }')
 # Move --kube-context option at the end for easier parsing
 cmd=$(echo "$@" | sed 's/\(--kube-context [a-zA-Z0-9\-]* \)\(.*\)/\2 \1/g')
@@ -15,13 +14,17 @@ then
     # will cause a parsing error from argocd, so we need to remove them.
     # We cannot use exec here as we need to pipe the output so we call helm in a subprocess and
     # handle the return code ourselves.
-    out=$(helm.bin secrets $cmd 2>/dev/null)
+    tmp_err=$(mktemp)
+    out=$(helm.bin secrets $cmd 2>"${tmp_err}")
     code=$?
     if [ $code -eq 0 ]; then
         # printf insted of echo here because we really don't want any backslash character processing
         printf '%s\n' "$out" | sed -E "/^removed '.+\.dec'$/d" | grep -v '\[helm-secrets\]'
+        rm "${tmp_err}"
         exit 0
     else
+        cat "${tmp_err}"
+        rm "${tmp_err}"
         exit $code
     fi
 else
