@@ -23,7 +23,7 @@ then
         rm "${tmp_err}"
         exit 0
     else
-        cat "${tmp_err}"
+        cat "${tmp_err}" > /dev/stderr
         rm "${tmp_err}"
         exit $code
     fi
