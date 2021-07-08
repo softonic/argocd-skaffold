@@ -5,6 +5,7 @@ ARG HELM_VERSION=3.5.1
 ARG HELM_SECRETS_VERSION=3.4.1
 ARG SOPS_VERSION=3.6.1
 ARG SKAFFOLD_VERSION=v1.26.1
+ARG JQ_VERSION=1.6
 USER root
 
 # Install dependencies
@@ -24,7 +25,9 @@ RUN curl -o /usr/local/bin/sops -L https://github.com/mozilla/sops/releases/down
 
 RUN curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/${SKAFFOLD_VERSION}/skaffold-linux-amd64 && chmod +x skaffold && mv skaffold /usr/local/bin
 
-# yq
+# yq and jq
+
+RUN wget https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/jq-linux64 -O /usr/bin/jq && chmod +x /usr/bin/jq
 
 RUN pip3 install yq
 
