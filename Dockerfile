@@ -10,7 +10,7 @@ USER root
 
 # Install dependencies
 RUN apt-get update \ 
-  && apt-get install -y curl sudo wget \
+  && apt-get install -y curl sudo wget python3-pip\
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -27,7 +27,7 @@ RUN curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/${SKAFFOL
 
 # yq
 
-RUN wget https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq
+RUN pip3 install yq
 
 USER argocd
 
