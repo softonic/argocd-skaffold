@@ -5,6 +5,7 @@ ARG HELM_VERSION=3.5.1
 ARG HELM_SECRETS_VERSION=3.4.1
 ARG SOPS_VERSION=3.6.1
 ARG SKAFFOLD_VERSION=v1.26.1
+ARG YQ_VERSION=2.4.1
 USER root
 
 # Install dependencies
@@ -22,7 +23,11 @@ RUN wget -qO- https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz | tar
 # Install recent sops
 RUN curl -o /usr/local/bin/sops -L https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux && chmod +x /usr/local/bin/sops
 
-RUN  curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/${SKAFFOLD_VERSION}/skaffold-linux-amd64 && chmod +x skaffold && mv skaffold /usr/local/bin
+RUN curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/${SKAFFOLD_VERSION}/skaffold-linux-amd64 && chmod +x skaffold && mv skaffold /usr/local/bin
+
+# yq
+
+RUN wget https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq
 
 USER argocd
 
