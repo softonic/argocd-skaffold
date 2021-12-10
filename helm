@@ -15,7 +15,7 @@ then
     # We cannot use exec here as we need to pipe the output so we call helm in a subprocess and
     # handle the return code ourselves.
     tmp_err=$(mktemp)
-    out=$(helm.bin secrets $cmd 2>"${tmp_err}")
+    out=$(helm.bin octopus --plugin=secrets $cmd 2>"${tmp_err}")
     code=$?
     if [ $code -eq 0 ]; then
         # printf insted of echo here because we really don't want any backslash character processing

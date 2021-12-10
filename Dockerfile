@@ -1,9 +1,10 @@
-ARG ARGOCD_VERSION=2.0.5
+ARG ARGOCD_VERSION=2.1.7
 FROM argoproj/argocd:v${ARGOCD_VERSION}
 
-ARG HELM_VERSION=3.5.1
-ARG HELM_SECRETS_VERSION=3.4.1
-ARG SOPS_VERSION=3.6.1
+ARG HELM_VERSION=3.7.2
+ARG HELM_SECRETS_VERSION=3.11.0
+ARG HELM_OCTOPUS_VERSION=0.0.0-dev
+ARG SOPS_VERSION=3.7.1
 ARG SKAFFOLD_VERSION=v1.26.1
 ARG JQ_VERSION=1.6
 USER root
@@ -31,4 +32,5 @@ RUN wget -qO- https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz | tar
 USER argocd
 
 # Install helm secrets
-RUN /usr/local/bin/helm.bin plugin install https://github.com/jkroepke/helm-secrets --version ${HELM_SECRETS_VERSION}
+RUN /usr/local/bin/helm.bin plugin install https://github.com/jkroepke/helm-secrets --version ${HELM_SECRETS_VERSION} &&\
+ /usr/local/bin/helm.bin plugin install https://github.com/softonic/helm-octopus --version ${HELM_OCTOPUS_VERSION}
