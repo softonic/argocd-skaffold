@@ -1,6 +1,7 @@
 ARG ARGOCD_VERSION=2.1.7
 FROM argoproj/argocd:v${ARGOCD_VERSION}
 
+ARG KUBECTL_VERSION=1.19.0
 ARG HELM_VERSION=3.7.2
 ARG HELM_SECRETS_VERSION=3.11.0
 ARG HELM_OCTOPUS_VERSION=0.2.0
@@ -26,8 +27,8 @@ RUN wget -qO- https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz | tar
     && chmod +x /usr/local/bin/skaffold \
     && wget https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/jq-linux64 -O /usr/bin/jq \
     && chmod +x /usr/bin/jq \
-    && pip3 install yq
-    
+    && pip3 install yq \
+    && curl -LO https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl && chmod +x kubectl && mv kubectl /usr/local/bin/
 
 USER argocd
 
