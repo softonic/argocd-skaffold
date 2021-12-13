@@ -15,7 +15,7 @@ then
     # We cannot use exec here as we need to pipe the output so we call helm in a subprocess and
     # handle the return code ourselves.
     tmp_err=$(mktemp)
-    if [ $HELM_OCTOPUS_ENABLED -eq 1 ]; then
+    if [ ${HELM_OCTOPUS_ENABLED:=0} -eq 1 ]; then
         out=$(helm.bin octopus --plugin=secrets $cmd 2>"${tmp_err}")
     else
         out=$(helm.bin secrets $cmd 2>"${tmp_err}")
