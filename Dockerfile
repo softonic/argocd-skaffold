@@ -6,7 +6,7 @@ ARG HELM_VERSION=3.7.2
 ARG HELM_SECRETS_VERSION=3.11.0
 ARG HELM_OCTOPUS_VERSION=0.2.0
 ARG SOPS_VERSION=3.7.1
-ARG SKAFFOLD_VERSION=v1.36.1
+ARG SKAFFOLD_VERSION=v1.26.1
 ARG JQ_VERSION=1.6
 USER root
 
@@ -30,7 +30,7 @@ RUN wget -qO- https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz | tar
     && pip3 install yq \
     && curl -LO https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl && chmod +x kubectl && mv kubectl /usr/local/bin/
 
-USER 999
+USER argocd
 
 # Install helm secrets
 RUN /usr/local/bin/helm.bin plugin install https://github.com/jkroepke/helm-secrets --version ${HELM_SECRETS_VERSION} &&\
