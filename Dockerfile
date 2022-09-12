@@ -1,4 +1,4 @@
-ARG ARGOCD_VERSION=2.3.1
+ARG ARGOCD_VERSION=2.4.11
 FROM argoproj/argocd:v${ARGOCD_VERSION}
 
 ARG KUBECTL_VERSION=1.20.0
@@ -11,7 +11,7 @@ ARG JQ_VERSION=1.6
 USER root
 
 # Install dependencies
-RUN apt-get update \ 
+RUN apt-get update \
   && apt-get install -y curl sudo wget python3-pip\
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
