@@ -7,6 +7,7 @@ ARG HELM_SECRETS_VERSION=3.15.0
 ARG HELM_OCTOPUS_VERSION=0.2.0
 ARG SOPS_VERSION=3.7.3
 ARG SKAFFOLD_VERSION=v1.39.2
+ARG SKAFFOLD_VERSION_2=v2.0.2
 ARG JQ_VERSION=1.6
 USER root
 
@@ -25,6 +26,8 @@ RUN wget -qO- https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz | tar
     && chmod +x /usr/local/bin/sops \
     && curl -o /usr/local/bin/skaffold -L https://storage.googleapis.com/skaffold/releases/${SKAFFOLD_VERSION}/skaffold-linux-amd64 \
     && chmod +x /usr/local/bin/skaffold \
+    && curl -o /usr/local/bin/skaffold_v2 -L https://storage.googleapis.com/skaffold/releases/${SKAFFOLD_VERSION_2}/skaffold-linux-amd64 \
+    && chmod +x /usr/local/bin/skaffold_v2 \
     && wget https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/jq-linux64 -O /usr/bin/jq \
     && chmod +x /usr/bin/jq \
     && pip3 install yq \
