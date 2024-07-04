@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ConfigManagementPlugin
+metadata:
+  name: skaffold
+spec:
+  generate:
+    command:
+    - /home/argocd/bin/skaffold-generate-script.sh
+  discover:
+    find:
+      command: ["sh", "-c", "find . -name 'skaffold.yaml'"]
+  init:
+    args:
+    - -c
+    - ls
+    command:
+    - bash
