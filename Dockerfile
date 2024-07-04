@@ -1,4 +1,4 @@
-ARG ARGOCD_VERSION=2.9.1
+ARG ARGOCD_VERSION=v2.8.6
 FROM quay.io/argoproj/argocd:v${ARGOCD_VERSION}
 
 ARG KUBECTL_VERSION=1.24.4
@@ -7,8 +7,9 @@ ARG HELM_SECRETS_VERSION=3.15.0
 ARG HELM_OCTOPUS_VERSION=0.2.0
 ARG SOPS_VERSION=3.7.3
 ARG SKAFFOLD_VERSION=v1.39.2
-ARG SKAFFOLD_VERSION_2=v2.0.2
+ARG SKAFFOLD_VERSION_2=v2.7.1
 ARG JQ_VERSION=1.6
+ARG CHARTMUSEUM_PASS=""
 USER root
 
 # Install dependencies
@@ -34,6 +35,10 @@ RUN wget -qO- https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz | tar
     && curl -LO https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl && chmod +x kubectl && mv kubectl /usr/local/bin/
 
 USER 999
+
+# Create the config directory and copy the plugin.yaml file
+WORKDIR /home/argocd/cmp-server/config/
+COPY plugin.yaml ./
 
 # Install helm secrets and helm octopus
 RUN /usr/local/bin/helm.bin plugin install https://github.com/jkroepke/helm-secrets --version ${HELM_SECRETS_VERSION} &&\
