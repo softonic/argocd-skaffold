@@ -1,4 +1,4 @@
-ARG ARGOCD_VERSION=v2.10.3
+ARG ARGOCD_VERSION=2.14.11
 FROM quay.io/argoproj/argocd:v${ARGOCD_VERSION}
 
 ARG KUBECTL_VERSION=1.24.4
@@ -9,6 +9,9 @@ ARG SOPS_VERSION=3.7.3
 ARG SKAFFOLD_VERSION=v2.7.1
 ARG JQ_VERSION=1.6
 ARG CHARTMUSEUM_PASS=""
+ARG YQ_VERSION=v4.47.1
+ARG YQ_BINARY=yq_linux_amd64
+
 USER root
 
 # Install dependencies
@@ -30,7 +33,8 @@ RUN wget -qO- https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz | tar
     && chmod +x /usr/local/bin/skaffold_v2 \
     && wget https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/jq-linux64 -O /usr/bin/jq \
     && chmod +x /usr/bin/jq \
-    && pip3 install yq \
+    && wget https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/${YQ_BINARY} -O /usr/bin/yq \
+    && chmod +x /usr/bin/yq \
     && curl -LO https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl && chmod +x kubectl && mv kubectl /usr/local/bin/
 
 USER 999
